@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CountryCard from './CountryCard'
 
-export default function CountriesList() {
+export default function CountriesList({query}) {
     const [countriesData, setCountriesData] = useState([])
 
     useEffect(() => {
@@ -14,7 +14,9 @@ export default function CountriesList() {
 
     return (
         <div className='flex justify-evenly flex-wrap gap-x-10 gap-y-16'>{
-            countriesData.map((country, idx) => {
+            countriesData.filter((country) => {
+                return country.name.common.toLowerCase().includes(query)
+            }).map((country, idx) => {
                 return <CountryCard
                     key={idx}
                     flag={country.flags.svg}
