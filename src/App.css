@@ -1,0 +1,15 @@
+body {
+    --background-color: white;
+    --text-color: black;
+    --elements-color: white;
+    --image-border: #ddd;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.dark {
+    --background-color: hsl(207, 26%, 17%);
+    --text-color: hsl(0, 0%, 100%);
+    --elements-color: hsl(209, 23%, 22%);
+    --image-border: hsl(209, 23%, 22%);
+}
