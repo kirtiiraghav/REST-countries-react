@@ -23,7 +23,9 @@ export default function CountriesList({ query }) {
                     name={country.name.common}
                     population={country.population.toLocaleString('en-IN')}
                     region={country.region}
-                    capital={country.capital ? country.capital?.join(', ') : 'N/A'} />
+                    capital={country.capital ? country.capital?.join(', ') : 'N/A'}
+                    data={country} />
+                    
             })
         }
         </div>
