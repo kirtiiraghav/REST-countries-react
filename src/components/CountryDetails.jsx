@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
+import CountryDetailsShimmer from './CountryDetailsShimmer'
 
 export default function CountryDetails() {
     const [countryData, setCountryData] = useState({
         borders: []
     })
+    const [isLoading, setIsLoading] = useState(true)
     const { country: countryName } = useParams()
     const { state } = useLocation()
 
@@ -44,6 +46,7 @@ export default function CountryDetails() {
     useEffect(() => {
         if (state) {
             updateCountryData(state);
+            setIsLoading(false);
             return
         }
 
@@ -51,6 +54,7 @@ export default function CountryDetails() {
             .then(res => res.json())
             .then(([data]) => {
                 updateCountryData(data)
+                setIsLoading(false);
             })
     }, [countryName])
 
@@ -60,36 +64,40 @@ export default function CountryDetails() {
                 <i className="fa-solid fa-arrow-left-long"></i>
                 <span className='ml-2 font-semibold'>Back</span>
             </a>
-            <section className='flex items-start lg:items-center gap-8 py-16 flex-col lg:flex-row'>
-                <div className='max-w-lg'>
-                    <img className='w-full lg:w-[90%] border-solid border-[1px] border-image-border dark:border-image-border' src={countryData.flag} alt="" />
-                </div>
-                <div className=''>
-                    <h2 className='text-2xl font-bold'>{countryData.name}</h2>
-                    <div className='flex flex-col lg:flex-row gap-y-3 lg:gap-x-6 my-6'>
-                        <div>
-                            <p><b>Native Name: </b>{countryData.nativeName}</p>
-                            <p><b>Population: </b>{countryData.population} </p>
-                            <p><b>Region: </b>{countryData.region} </p>
-                            <p><b>Sub Region: </b>{countryData.subregion}</p>
-                            <p><b>Capital: </b>{countryData.capital}</p>
+            {isLoading ? <CountryDetailsShimmer /> : (
+                <section className='flex items-start lg:items-center gap-8 py-16 flex-col lg:flex-row'>
+                    <div className='max-w-lg'>
+                        <img className='w-full lg:w-[90%] border-solid border-[1px] border-image-border dark:border-image-border' src={countryData.flag} alt="" />
+                    </div>
+                    <div className=''>
+                        <h2 className='text-2xl font-bold'>{countryData.name}</h2>
+                        <div className='flex flex-col lg:flex-row gap-y-3 lg:gap-x-6 my-6'>
+                            <div className='flex-shrink-0'>
+                                <p><b>Native Name: </b>{countryData.nativeName}</p>
+                                <p><b>Population: </b>{countryData.population} </p>
+                                <p><b>Region: </b>{countryData.region} </p>
+                                <p><b>Sub Region: </b>{countryData.subregion}</p>
+                                <p><b>Capital: </b>{countryData.capital}</p>
+                            </div>
+                            <div>
+                                <p><b>Top Level Domain: </b>{countryData.tld}</p>
+                                <p><b>Currencies: </b>{countryData.currencies}</p>
+                                <p><b>Languages: </b>{countryData.languages}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p><b>Top Level Domain: </b>{countryData.tld}</p>
-                            <p><b>Currencies: </b>{countryData.currencies}</p>
-                            <p><b>Languages: </b>{countryData.languages}</p>
+                        <div className='flex flex-wrap gap-x-3 gap-y-2'>
+                            <b>Border Countries: </b>
+                            {
+                                countryData.borders.length !== 0 ? countryData.borders.map((borderCountry, idx) => {
+                                    return <Link className='bg-elements-color dark:bg-elements-color py-1 px-2 rounded shadow text-[12px]' key={idx} to={`/${borderCountry}`}>{borderCountry}</Link>
+                                }) : 'No neighboring countries'
+                            }
                         </div>
                     </div>
-                    <div className='flex flex-wrap gap-x-3 gap-y-2'>
-                        <b>Border Countries: </b>
-                        {
-                            countryData.borders.length !== 0 ? countryData.borders.map((borderCountry, idx) => {
-                                return <Link className='bg-elements-color dark:bg-elements-color py-1 px-2 rounded shadow text-[12px]' key={idx} to={`/${borderCountry}`}>{borderCountry}</Link>
-                            }) : 'No neighboring countries'
-                        }
-                    </div>
-                </div>
-            </section>
+                </section>
+            )}
+
+
         </main >
     )
 }
