@@ -16,6 +16,7 @@ export default {
             'text-color': 'var(--text-color)',
             'elements-color': 'var(--elements-color)',
             'image-border': 'var(--image-border)',
+            'shimmer-color':'var(--shimmer-color)',
           },
       },
     },

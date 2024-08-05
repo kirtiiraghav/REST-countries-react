@@ -3,6 +3,7 @@ body {
     --text-color: black;
     --elements-color: white;
     --image-border: #ddd;
+    --shimmer-color: hsl(0, 0%, 78%);
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -12,4 +13,5 @@ body.dark {
     --text-color: hsl(0, 0%, 100%);
     --elements-color: hsl(209, 23%, 22%);
     --image-border: hsl(209, 23%, 22%);
+    --shimmer-color: hsl(208, 21%, 34%);
 }
